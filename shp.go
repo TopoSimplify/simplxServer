@@ -3,23 +3,25 @@ package main
 import (
 	"fmt"
 	"github.com/jonas-p/go-shp"
+	"log"
 )
 
 func readShp(filename string) {
-	shape, err := shp.Open(filename)
+	var shape, err = shp.Open(filename)
 	if err != nil {
+		log.Println("error reading shapefile : ", filename)
 		panic(err)
 	}
 	defer shape.Close()
 
 	// fields from the attribute table (DBF)
-	fields := shape.Fields()
+	var fields = shape.Fields()
 
 	// loop through all features in the shapefile
 	for shape.Next() {
-		n, p := shape.Shape()
-		polygon, ook := p.(*shp.Polygon)
-		if !ook {
+		var n, p = shape.Shape()
+		var polygon, ok = p.(*shp.Polygon)
+		if !ok {
 			panic("Failed to type assert.")
 		}
 		for _, point := range polygon.Points {
@@ -28,7 +30,7 @@ func readShp(filename string) {
 
 		// print attributes
 		for k, f := range fields {
-			val := shape.ReadAttribute(n, k)
+			var val = shape.ReadAttribute(n, k)
 			fmt.Printf("\t%v: %v\n", f, val)
 		}
 		fmt.Println()

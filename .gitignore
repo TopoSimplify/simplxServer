@@ -2,6 +2,7 @@
 sandbox/
 *.iml
 *.exe
+goServer_exe
 
 
 # Binaries for programs and plugins

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title> Context Simplification </title>
+    <meta name="description" content="">
+    <meta name="author" content="Titus T.">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- #CSS Links -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css">-->
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/smartadmin-skins.min.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/smartadmin-rtl.min.css">
+
+
+    <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./site/css/demo.css">
+
+    <!-- #FAVICONS -->
+    <link rel="shortcut icon" href="./site/assets/logo.png" type="image/x-icon">
+    <link rel="icon" href="./site/assets/logo.png" type="image/x-icon">
+
+    <!-- #GOOGLE FONT -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <!-- #APP SCREEN / ICONS -->
+    <!-- Specifying a Webpage Icon for Web Clip
+         Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
+    <link rel="apple-touch-icon" href="./site/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./site/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./site/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./site/img/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="./site/img/splash/ipad-landscape.png"
+          media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="./site/img/splash/ipad-portrait.png"
+          media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="./site/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+    <style>
+        .bar-holder {
+            padding: 3px 3px;
+        }
+
+        .widget-footer {
+            padding: 1px 1px 1px 1px;
+        }
+
+        html, #map-canvas, #map-canvas {
+            height: 100%;
+            width: 100%;
+            background: #111111;
+            margin: 0;
+            padding: 0
+        }
+
+        #map-canvas {
+            background: #111111;
+        }
+
+        #gantry-canvas {
+            background: #111111;
+        }
+
+        /* =======================================================
+           Color Ramps
+        ======================================================= */
+
+        #color-ramp-menu {
+            padding: 15px 0 15px 0;
+        }
+
+        #clearButton {
+            position: absolute;
+            z-index: 999;
+            left: 10px;
+            bottom: 10px;
+        }
+
+        #clearButton {
+            color: #fff !important;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="smart-style-1 fixed-header fixed-ribbon fixed-page-footer">
+
+<!-- #HEADER -->
+<header id="header">
+    <div id="logo-group">
+        <span id="logo"> <img src="./site/assets/logo.png" alt="GGE-GIS Group." style="height: 23px; width: 26px;"> </span>
+    </div>
+
+    <!-- pulled right: nav area -->
+    <div class="pull-right">
+        <!-- collapse menu button -->
+        <div id="hide-menu" class="btn-header pull-right">
+            <span>
+                <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
+                    <i class="fa fa-reorder"></i>
+                </a>
+            </span>
+        </div>
+        <!-- end collapse menu -->
+
+
+        <!-- fullscreen button -->
+        <div id="fullscreen" class="btn-header transparent pull-right">
+            <span>
+                <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i
+                        class="fa fa-arrows-alt"></i></a>
+            </span>
+        </div>
+        <!-- end fullscreen button -->
+
+
+    </div>
+    <!-- end pulled right: nav area -->
+
+</header>
+<!-- END HEADER -->
+
+<!-- #NAVIGATION -->
+<aside id="left-panel">
+    <div class="login-info">
+        <span>
+            <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut"> <span></span> </a>
+        </span>
+    </div>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="#" title="Simplify"><i class="fa fa-lg fa-fw fa-tasks"></i> <span class="menu-item-parent">Simplify</span></a>
+                <ul>
+                    <li>
+                        <a href="#" title="Constrained"><span class="menu-item-parent">Context Simplification</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+</aside>
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <span class="ribbon-button-alignment">
+            <span id="refresh" class="btn btn-ribbon" data-action="resetWidgets" data-title="refresh"
+                  rel="tooltip" data-placement="bottom"
+                  data-original-title="<i class='text-warning fa fa-warning'></i> Warning! This will reset all your widget settings."
+                  data-html="true">
+                <i class="fa fa-refresh"></i>
+            </span>
+        </span>
+    </div>
+
+
+    <div id="content">
+        <section id="widget-grid" class="">
+            <div id="upload-widgets" class="row">
+
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                    <div id="task-widget-0" class="jarviswidget jarviswidget-color-blueLight"
+                         data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-map-o"></i> </span>
+                            <h2> Constrained Line Simplification</h2>
+                        </header>
+                        <div class="widget-body">
+                            <div class="row">
+                                <div id="gantry-canvas" style="width: 100%;height: 620px;"></div>
+                                <img id="gantry-img" src="" style="width: 100%;display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                    <div id="task-widget-1" class="jarviswidget jarviswidget-color-blueLight"
+                         data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false">
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-image"></i> </span>
+                            <h2> Simplification Constraints</h2>
+                        </header>
+                        <div class="widget-body">
+                            <form id="attribute-panel">
+
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- PAGE FOOTER -->
+<div class="page-footer">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <span class="txt-color-white">GGE-GIS Group. © 2018</span>
+        </div>
+    </div>
+</div>
+
+<!-- END PAGE FOOTER -->
+<div id="loading-indicator" style="display:none">
+    <img id="loadlogo" src="./site/assets/loadtransparent.svg"/>
+    <br/>
+    <center>
+        Processing ...
+    </center>
+</div>
+
+
+<!--================================================== -->
+<script type="text/javascript" src="./site/js/lodash/lodash.js"></script>
+
+<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+<script src="./site/js/jquery/jquery-2.1.1.min.js"></script>
+<script src="./site/js/jquery/jquery-ui-1.10.3.min.js"></script>
+
+<!--leaflet -->
+<link rel="stylesheet" href="./site/js/leaflet/lib/leaflet.css">
+<script src="./site/js/leaflet/lib/leaflet-src.js"></script>
+
+<script type="text/javascript" src="./site/js/rbush/rbush.js"></script>
+
+
+<link rel="stylesheet" href="./site/plugins/mouse/L.Control.MousePosition.css">
+<script src="./site/plugins/mouse/L.Control.MousePosition.js"></script>
+
+<script src="./site/plugins/watermark.js"></script>
+<link rel="stylesheet" href="./site/plugins/draw/leaflet.draw.css">
+<script src="./site/plugins/draw/leaflet.draw-src.js"></script>
+
+
+<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+<script data-pace-options='{ "restartOnRequestAfter": true }' src="./site/js/plugin/pace/pace.min.js"></script>
+
+<!-- IMPORTANT: APP CONFIG -->
+<script src="./site/js/app.config.js"></script>
+<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
+<script src="./site/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script>
+<!-- BOOTSTRAP JS -->
+<script src="./site/js/bootstrap/js/bootstrap.min.js"></script>
+<!-- CUSTOM NOTIFICATION -->
+<script src="./site/js/notification/SmartNotification.min.js"></script>
+<!-- JARVIS WIDGETS -->
+<script src="./site/js/smartwidgets/jarvis.widget.min.js"></script>
+
+<!-- EASY PIE CHARTS -->
+<script src="./site/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
+
+<!-- SPARKLINES -->
+<script src="./site/js/plugin/sparkline/jquery.sparkline.min.js"></script>
+
+<!-- JQUERY VALIDATE -->
+<script src="./site/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+<!-- JQUERY MASKED INPUT -->
+<script src="./site/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+<!-- JQUERY SELECT2 INPUT -->
+<script src="./site/js/plugin/select2/select2.min.js"></script>
+<!-- JQUERY UI + Bootstrap Slider -->
+<script src="./site/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
+<script src="./site/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
+<!-- FastClick: For mobile devices -->
+<script src="./site/js/plugin/fastclick/fastclick.min.js"></script>
+<script src="./site/js/notify/notify-combined.min.js"></script>
+<script src="./site/js/jquery/moment.js"></script>
+
+<!-- Demo purpose only -->
+<script src="./site/js/jquery/jquery.blockUI.js"></script>
+<script src="./site/js/demo.js"></script>
+
+<!-- MAIN APP JS FILE -->
+<script src="./site/js/app.js"></script>
+<script src="./site/js/linegen.js"></script>
+</body>
+
+</html>

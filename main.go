@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"flag"
-	"runtime"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"os"
 	"os/signal"
-	"gopkg.in/gin-gonic/gin.v1"
+	"runtime"
 )
 
 var Port int
@@ -16,7 +16,6 @@ const DebugMode = 0
 const ReleaseMode = 1
 const Error = 500
 const Success = 200
-
 
 func init() {
 	flag.IntVar(&Port, "port", 8000, "host port")
@@ -33,7 +32,7 @@ func main() {
 
 	go func() {
 		<-c
-		fmt.Println("singnaled exit ...")
+		fmt.Println("signaled exit ...")
 		close(server.Exit)
 		os.Exit(1)
 	}()

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 func (server *Server) Run() {
-	var router = gin.Default()
 	gin.SetMode(server.Mode)
+	var router = gin.Default()
 	server.setRoutes(router)
 	router.Run(server.Address)
 }
